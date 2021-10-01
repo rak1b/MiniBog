@@ -43,9 +43,10 @@ const CreatePost = (props) => {
     .post(url, data, auth)
     .then(function (response) {
       console.log(response);
+      props.UpdateData(data);
     })
     .catch(function (error) {
-      console.log(`Error : `,error.response.data.error);
+      console.log(`Error : `,error);
     });
 
   }

@@ -10,6 +10,7 @@ import Home from "../Home";
 import Article from "./Articles";
 import Login from "./Login";
 import Logout from "./Logout";
+import BlogApp from './../BlogApp';
 const Navbar = () => {
   return (
     <Router>
@@ -29,7 +30,7 @@ const Navbar = () => {
 
             <li>
               <NavLink exact to="/Articles">
-                Articles
+                BlogApp
               </NavLink>
             </li>
             <li>
@@ -48,7 +49,7 @@ const Navbar = () => {
 
       <Switch>
         <Route path="/Articles">
-          <Article />
+          <BlogApp />
         </Route>
 
         <Route path="/home">

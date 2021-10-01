@@ -1,10 +1,10 @@
 import React from 'react'
-import Article from './components/Articles';
+import BlogApp from './BlogApp';
 
 const Home = () => {
     return (
         <div>
-            <Article/>
+            <BlogApp/>
         </div>
     )
 }
