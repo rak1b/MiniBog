@@ -5,8 +5,9 @@ from rest_framework.authtoken.views import Token
 class HomeSerializer(ModelSerializer):
     class Meta:
         model = Articles
-        fields = '__all__'
+        fields = ('id','title','content')
         
+            
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
