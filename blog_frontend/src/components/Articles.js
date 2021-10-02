@@ -24,7 +24,20 @@ const Article = (props) => {
       
     });
     
+  }; 
+  
+  const EditPost = (id) => {
+    axios.patch(`${url}/${id}`, auth).then((response) => {
+      props.UpdateEditedData(id);
+      console.log(response.data)
+    }).catch((error) => {
+      console.log('Error',error)
+      
+    });
+    
   };
+
+  
 
 
 
@@ -45,7 +58,11 @@ const Article = (props) => {
             >
               <i className="fa fa-trash"></i>
             </button>
-            <button className="btn btn-outline-success">
+            <button className="btn btn-outline-success" onClick={() => {
+                props.setCreate(1) 
+                props.SetCurrentPost(item);
+
+              }}>
               <i className="fa fa-edit"></i>
             </button>
           </div>

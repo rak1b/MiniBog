@@ -26,6 +26,8 @@ class HomeViewSet(ViewSet):
     permission_classes=[IsAuthenticated]
     authentication_classes=(TokenAuthentication,)
     
+    
+    
     def list(self, request):
         aricles = Articles.objects.all().order_by('-added')
         serializer = HomeSerializer(aricles, many=True)
@@ -48,15 +50,22 @@ class HomeViewSet(ViewSet):
 
 
     def update(self, request, pk=None):
-        article = Articles.objects.get(pk,pk)
+        article = Articles.objects.get(id=pk)
+
         serializer = HomeSerializer(article,data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'data':'Created'},status=status.HTTP_201_CREATED)
         return Response({'error':serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
-    # def partial_update(self, request, pk=None):
-    #     pass
+    def partial_update(self, request, pk=None):
+        article = Articles.objects.get(id=pk)
+
+        serializer = HomeSerializer(article,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data':'Created'},status=status.HTTP_201_CREATED)
+        return Response({'error':serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None):
         article = Articles.objects.get(id=pk)

@@ -8,7 +8,7 @@ const BlogApp = (props) => {
   const [post, setpost] = useState({id:null,title:null,content:null});
   const [Create , setCreate] = useState(0);
   const [token] = useCookies(['token'])
-
+  const [EditPost, setEditPost] = useState({})
   const url = "http://localhost:8000/api/home";
   const auth = {
     headers: {
@@ -65,9 +65,9 @@ const BlogApp = (props) => {
           }}> Create New Post</button>
         </h2>
       </div>
-      {Create===1?<CreatePost UpdateData={UpdateData} hideFunc={setCreate}/>:''}
+      {Create===1?<CreatePost UpdateData={UpdateData}  CurrentPost={EditPost} hideFunc={setCreate}/>:''}
       
-      {post.id === null? <h1 className='text-danger text-center'>Please,Login to see articles...</h1>:<Article post={post} UpdateDeletedData={UpdateDeletedData}  />}
+      {post.id === null? <h1 className='text-danger text-center'>Please,Login to see articles...</h1>:<Article post={post} setCreate={setCreate} SetCurrentPost = {setEditPost} UpdateDeletedData={UpdateDeletedData}   />}
 
     </div>
   );
