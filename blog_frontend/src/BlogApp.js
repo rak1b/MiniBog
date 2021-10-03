@@ -9,6 +9,8 @@ const BlogApp = (props) => {
   const [Create , setCreate] = useState(0);
   const [token] = useCookies(['token'])
   const [EditPost, setEditPost] = useState({})
+  const [EditCheck, SetEditCheck] = useState(0);
+
   const url = "http://localhost:8000/api/home";
   const auth = {
     headers: {
@@ -62,12 +64,13 @@ const BlogApp = (props) => {
           View All Post or 
           <button className="btn btn-outline-info ms-2 " onClick={() => {
             setCreate(1)
+            SetEditCheck(0)
           }}> Create New Post</button>
         </h2>
       </div>
-      {Create===1?<CreatePost UpdateData={UpdateData}  CurrentPost={EditPost} hideFunc={setCreate}/>:''}
+      {Create===1?<CreatePost UpdateData={UpdateData} EditCheck={EditCheck} SetEditCheck={SetEditCheck}  CurrentPost={EditPost} hideFunc={setCreate}/>:''}
       
-      {post.id === null? <h1 className='text-danger text-center'>Please,Login to see articles...</h1>:<Article post={post} setCreate={setCreate} SetCurrentPost = {setEditPost} UpdateDeletedData={UpdateDeletedData}   />}
+      {post.id === null? <h1 className='text-danger text-center'>Please,Login to see articles...</h1>:<Article post={post} setCreate={setCreate} SetEditCheck={SetEditCheck} SetCurrentPost = {setEditPost} UpdateDeletedData={UpdateDeletedData}   />}
 
     </div>
   );

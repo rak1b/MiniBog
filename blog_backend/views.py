@@ -64,7 +64,7 @@ class HomeViewSet(ViewSet):
         serializer = HomeSerializer(article,data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response({'data':'Created'},status=status.HTTP_201_CREATED)
+            return Response({'data':'Updated'},status=status.HTTP_201_CREATED)
         return Response({'error':serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None):

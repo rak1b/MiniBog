@@ -26,16 +26,16 @@ const Article = (props) => {
     
   }; 
   
-  const EditPost = (id) => {
-    axios.patch(`${url}/${id}`, auth).then((response) => {
-      props.UpdateEditedData(id);
-      console.log(response.data)
-    }).catch((error) => {
-      console.log('Error',error)
+  // const EditPost = (id) => {
+    // axios.patch(`${url}/${id}`, auth).then((response) => {
+    //   props.UpdateEditedData(id);
+    //   console.log(response.data)
+    // }).catch((error) => {
+    //   console.log('Error',error)
       
-    });
+    // });
     
-  };
+  // };
 
   
 
@@ -61,6 +61,7 @@ const Article = (props) => {
             <button className="btn btn-outline-success" onClick={() => {
                 props.setCreate(1) 
                 props.SetCurrentPost(item);
+                props.SetEditCheck(1)
 
               }}>
               <i className="fa fa-edit"></i>

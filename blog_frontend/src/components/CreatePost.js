@@ -5,20 +5,9 @@ import { useCookies } from "react-cookie";
 
 const CreatePost = (props) => {
   const [token] = useCookies("token");
-  console.log(`Cookie here : ${token.token}`);
-  // const title_inp = useRef("test");
- const [title_inp, settitle_inp] = useState('')
- const [content_inp, setcontent_inp] = useState('')
-  const [post, setpost] = useState({title:null,content:null});
-  const data = {
-    title: post.title,
-    content: post.content,
-  };
-
-  console.log(props.CurrentPost)
-
-  const url = "http://localhost:8000/api/home/";
-  
+  const [title_inp, settitle_inp] = useState("");
+  const [content_inp, setcontent_inp] = useState("");
+  const url = "http://localhost:8000/api/home";
   const auth = {
     headers: {
       Authorization: `Token ${token["token"]}`,
@@ -29,69 +18,66 @@ const CreatePost = (props) => {
     props.hideFunc(0);
   };
 
+  console.log(props.EditCheck);
   const CreatePost = (e) => {
     e.preventDefault();
-    setpost({
+    const data = {
       title: title_inp,
       content: content_inp,
-    });
-
+    };
+    if (props.EditCheck === 0) {
+      axios
+        .post(url+'/', data, auth)
+        .then(function (response) {
+          console.log(response);
+          props.UpdateData(data);
+        })
+        .catch(function (error) {
+          console.log(`Error : `, error);
+        });
+    }else{
+      axios.patch(`${url}/${props.CurrentPost.id}/`,data,auth).then((response) => {
+        props.UpdateData(data);
+        console.log(response.data)
+      }).catch((error) => {
+        console.log('Error',error)
+        
+      });
+    }
   };
 
-useEffect(() => {
-  setcontent_inp(props.CurrentPost.content)
-  settitle_inp(props.CurrentPost.title)
-}, [props.CurrentPost])
-  
-
-  // useEffect(() => {
-  //   if(post.title!==null){
-  //   axios
-  //   .post(url, data, auth)
-  //   .then(function (response) {
-  //     console.log(response);
-  //     props.UpdateData(data);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(`Error : `,error);
-  //   });
-
-  // }
-  // }, [post])
+  useEffect(() => {
+    setcontent_inp(props.CurrentPost.content);
+    settitle_inp(props.CurrentPost.title);
+    // SetEditCheck(1)
+  }, [props.CurrentPost]);
 
   return (
     <div>
-      
       <form action="" onSubmit={CreatePost} className="w-50 mt-5 m-auto">
         <input
           className="form-control my-2"
           type="text"
-          value={post.title}
-          // value={props.CurrentPost.title}
-
+          value={title_inp}
           placeholder="Title"
           onChange={(e) => {
-          settitle_inp(e.target.value)
-            
-            
+            settitle_inp(e.target.value);
           }}
-          
-
         />
         <textarea
           className="form-control my-2"
           type="text"
-          value={post.content}
+          value={content_inp}
           placeholder="Content"
           onChange={(e) => {
-          setcontent_inp(e.target.value)
-            
-            
+            setcontent_inp(e.target.value);
           }}
-
         />
-        <button className="btn btn-outline-success my-2">Publish</button>
-        <button className="btn btn-outline-info ms-2 " onClick={hideCreate}> Close</button>
+
+        {props.EditCheck===1?<button className="btn btn-outline-success my-2">Update</button>:<button className="btn btn-outline-success my-2">Publish</button>}
+        <button className="btn btn-outline-info ms-2 " onClick={hideCreate}>
+          Close
+        </button>
       </form>
     </div>
   );
